@@ -130,10 +130,15 @@ class build_model(nn.Module):
         self.text_projection = nn.Linear(512, 768)
 
         # cfg에서 매개변수 추출하거나 기본값 사용
-        d_model = cfg.get('d_model', 768)
-        nhead = cfg.get('nhead', 8)
-        mlp_ratio = cfg.get('mlp_ratio', 4.0)
-        dropout = cfg.get('dropout', 0.1)
+        # d_model = cfg.get('d_model', 768)
+        # nhead = cfg.get('nhead', 8)
+        # mlp_ratio = cfg.get('mlp_ratio', 4.0)
+        # dropout = cfg.get('dropout', 0.1)
+
+        d_model = 768
+        nhead = 8
+        mlp_ratio = 4.0
+        dropout = 0.1
         
         self.CFF = ContextualFeatureFusion(d_model, nhead, mlp_ratio, dropout)
        
@@ -145,8 +150,8 @@ class build_model(nn.Module):
         text_feature_seq_proj = self.text_projection(text_features)
         
         # Contextual Feature Fusion
-        fused_features = self.CFF(image_features, text_features)
-        
+        fused_features = self.CFF(image_features, text_feature_seq_proj)
+
         return fused_features
 
     def textEncoder(self, text_ids):
@@ -178,6 +183,6 @@ class build_model(nn.Module):
         return x
 
 
-def make_model(cfg, num_class, camera_view, view_num):
+def make_model(cfg, num_class, camera_num, view_num):
     model = build_model(cfg)
     return model

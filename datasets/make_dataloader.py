@@ -24,7 +24,8 @@ __factory = {
 
 def train_collate_fn(batch):
     """
-    # collate_fn这个函数的输入就是一个list，list的长度是一个batch size，list中的每个元素都是__getitem__得到的结果
+    # collate_fn这个函数的输入就是一个list, list的长度是一个batch size, list中的每个元素都是__getitem__得到的结果
+    # The input for the `collate_fn` function is a list, the length of the list is a batch size, and each element in the list is the result of __getitem__.
     """
     imgs, pids, camids, viewids , _ = zip(*batch)
     pids = torch.tensor(pids, dtype=torch.int64)
@@ -58,7 +59,8 @@ def make_dataloader(cfg):
     num_workers = cfg.DATALOADER.NUM_WORKERS
 
     if cfg.DATASETS.NAMES == 'ourapi':
-        dataset = OURAPI(root_train=cfg.DATASETS.ROOT_TRAIN_DIR, root_val=cfg.DATASETS.ROOT_VAL_DIR, config=cfg)
+        # dataset = OURAPI(root_train=cfg.DATASETS.ROOT_TRAIN_DIR, root_val=cfg.DATASETS.ROOT_VAL_DIR, config=cfg)
+        pass
     else:
         dataset = __factory[cfg.DATASETS.NAMES](root=cfg.DATASETS.ROOT_DIR)
 
